@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="openSideMenu"></v-app-bar-nav-icon>
       <v-toolbar-title>マイアドレス帳</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -23,5 +23,10 @@ export default {
   data: () => ({
     //
   }),
+  methods: {
+    openSideMenu(){
+      this.$store.dispatch('toggleSideMenu')
+    }
+  }
 };
 </script>
