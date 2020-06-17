@@ -10,11 +10,22 @@
           <v-card-text>
             <v-form>
               <v-text-field v-model="address.name" label="名前"></v-text-field>
-              <v-text-field v-model="address.tel" label="電話番号"></v-text-field>
-              <v-text-field v-model="address.email" label="メールアドレス"></v-text-field>
-              <v-text-field v-model="address.address" label="住所"></v-text-field>
+              <v-text-field
+                v-model="address.tel"
+                label="電話番号"
+              ></v-text-field>
+              <v-text-field
+                v-model="address.email"
+                label="メールアドレス"
+              ></v-text-field>
+              <v-text-field
+                v-model="address.address"
+                label="住所"
+              ></v-text-field>
               <div class="text-center">
-                <v-btn @click="$router.push({ name: 'addresses' })">キャンセル</v-btn>
+                <v-btn @click="$router.push({ name: 'addresses' })"
+                  >キャンセル</v-btn
+                >
                 <v-btn color="info" class="ml-2" @click="submit">保存</v-btn>
               </div>
             </v-form>
@@ -27,11 +38,24 @@
 
 <script>
 import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
-      address: {}
+      address: {},
     };
+  },
+  created() {
+    if (!this.$route.params.address_id) return;
+
+    const address = this.$store.getters.getAddressByID(
+      this.$route.params.address_id
+    );
+    if (address) {
+      this.address = address;
+    } else {
+      this.$router.push({ name: "addresses" });
+    }
   },
   methods: {
     submit() {
@@ -39,7 +63,7 @@ export default {
       this.$router.push({ name: "addresses" });
       this.address = {};
     },
-    ...mapActions(["addAddress"])
-  }
+    ...mapActions(["addAddress"]),
+  },
 };
 </script>
